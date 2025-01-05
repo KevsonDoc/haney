@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  SerializeOptions,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../authentication/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
@@ -16,11 +26,21 @@ export class UserController {
   }
 
   @Get('me')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     description: 'fetch logged user info',
     summary: 'fetch logged user info',
   })
-  public async findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @ApiBearerAuth()
+  @UseInterceptors(ClassSerializerInterceptor)
+  @SerializeOptions({
+    excludePrefixes: ['__v', 'password'],
+  })
+  public async findOne() {
+    const user = await this.userService.findOne({});
+    return {
+      ...user,
+      _id: user._id.toString(),
+    };
   }
 }

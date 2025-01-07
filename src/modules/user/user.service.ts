@@ -14,7 +14,7 @@ import { User } from './entities/user.entity';
 export class UserService {
   constructor(
     @InjectModel(User.name)
-    private userModel: Model<User>,
+    private readonly userModel: Model<User>,
   ) {}
 
   public async create(createUserDto: CreateUserDto) {

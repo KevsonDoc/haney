@@ -10,9 +10,9 @@ import { AuthenticationModule } from './modules/authentication/authentication.mo
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     DatabaseModule,
+    AuthenticationModule,
     UserModule,
     TransactionModule,
-    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [],

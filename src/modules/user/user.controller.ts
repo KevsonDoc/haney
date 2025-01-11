@@ -18,7 +18,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @ApiOperation({ description: 'Create user', summary: 'Create user' })
+  @ApiOperation({ description: 'Create user.', summary: 'Create user.' })
   public async create(@Body() createUserDto: CreateUserDto) {
     await this.userService.create(createUserDto);
 

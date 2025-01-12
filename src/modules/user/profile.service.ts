@@ -2,9 +2,10 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
+import { Connection, FlattenMaps, Model, Require_id } from 'mongoose';
 import { CreateProfile } from './dto/create-profile.dto';
 import { Profile } from './entities/profile.entity';
 import { User } from './entities/user.entity';
@@ -38,5 +39,17 @@ export class ProfileService {
         'An error occurred while creating the user',
       ]);
     }
+  }
+
+  public async findOne(
+    profileId: string,
+  ): Promise<FlattenMaps<Require_id<Profile>>> {
+    const profile = await this.profileModel.findById(profileId).exec();
+
+    if (!profile) {
+      throw new NotFoundException(['Invalid profile']);
+    }
+
+    return profile.toJSON();
   }
 }

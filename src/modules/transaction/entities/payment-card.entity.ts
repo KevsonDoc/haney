@@ -2,7 +2,7 @@ import { Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Profile } from 'src/modules/user/entities/profile.entity';
 
-export type UserDocument = HydratedDocument<PaymentCard>;
+export type PaymentCardDocument = HydratedDocument<PaymentCard>;
 
 export class PaymentCard {
   @Prop()
@@ -25,4 +25,4 @@ export class PaymentCard {
   public profile: Profile;
 }
 
-export const InvoiceSchema = SchemaFactory.createForClass(PaymentCard);
+export const PaymentCardSchema = SchemaFactory.createForClass(PaymentCard);

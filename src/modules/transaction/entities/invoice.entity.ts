@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Profile } from 'src/modules/user/entities/profile.entity';
 import { Category } from './category.entity';
+import { PaymentCard } from './payment-card.entity';
 
 export type UserDocument = HydratedDocument<Invoice>;
 
@@ -15,6 +16,12 @@ export class Invoice {
 
   @Prop()
   public invoiceValue: number;
+
+  @Prop({ default: false })
+  public recurrence: boolean;
+
+  @Prop()
+  public recurrenceCount: number | null;
 
   @Prop({ default: null })
   public invoiceDate: Date;
@@ -32,6 +39,15 @@ export class Invoice {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   })
   public category: [Category];
+
+  @Prop({
+    type: {
+      default: null,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'PaymentCard',
+    },
+  })
+  public paymentCard: PaymentCard | null;
 
   @Prop({
     type: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },

@@ -26,11 +26,6 @@ export class CategoryController {
 
   @Get()
   public async find(@Query() payload: FindCategoryDto) {
-    console.log(payload);
-
     return await this.categoryService.find(payload);
   }
-
-  @Get(':id')
-  public async findOne() {}
 }

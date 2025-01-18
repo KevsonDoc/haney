@@ -1,14 +1,7 @@
-import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Get,
-  Post,
-  SerializeOptions,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { Request } from 'express';
+import { Types } from 'mongoose';
 import { JwtAuthGuard } from '../authentication/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
@@ -32,15 +25,15 @@ export class UserController {
     summary: 'fetch logged user info',
   })
   @ApiBearerAuth()
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    excludePrefixes: ['__v', 'password'],
-  })
-  public async findOne() {
-    const user = await this.userService.findOne({});
-    return {
-      ...user,
-      _id: user._id.toString(),
-    };
+  public async findOne(@Req() request: Request) {
+    const { userId } = request.user as { userId: string };
+
+    const user = await this.userService.findOne({
+      _id: new Types.ObjectId(userId),
+    });
+
+    user.password = undefined;
+
+    return user;
   }
 }

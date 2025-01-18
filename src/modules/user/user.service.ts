@@ -46,9 +46,11 @@ export class UserService {
   }
 
   public async findOne(
-    entity: Partial<User>,
+    entity: Partial<Require_id<User>>,
   ): Promise<FlattenMaps<Require_id<User>>> {
-    const user = await this.userModel.findOne(entity).where(entity).exec();
+    const user = await this.userModel.findOne(entity);
+    await user.populate('profile');
+
     return user.toJSON();
   }
 }

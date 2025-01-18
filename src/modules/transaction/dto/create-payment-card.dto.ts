@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, MaxLength } from 'class-validator';
+import { IsDateString, IsNotEmpty, MaxLength } from 'class-validator';
 
 export class CreatePaymentCardDto {
   @ApiProperty({ example: 'Cartão virtual inter' })
@@ -10,4 +10,14 @@ export class CreatePaymentCardDto {
   @IsNotEmpty()
   @MaxLength(4)
   public finalNumber: string;
+
+  @ApiProperty({ description: 'Data de vencimento da fatura' })
+  @IsNotEmpty()
+  @IsDateString()
+  public invoiceDueDate: Date;
+
+  @ApiProperty({ description: 'Data de fechamento da fatura' })
+  @IsNotEmpty()
+  @IsDateString()
+  public invoiceClosingDate: Date;
 }

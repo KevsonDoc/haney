@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/modules/authentication/guard/jwt-auth.guard';
 import { CreatePaymentCardDto } from '../dto/create-payment-card.dto';
+import { FindPaymentCardDto } from '../dto/find-payment.dto';
 import { PaymentCardService } from '../service/payment-card.service.service';
 
 @ApiTags('Payment Card')
@@ -25,9 +34,18 @@ export class PaymentCardController {
     return ['Payment card created successfully'];
   }
 
+  @ApiOperation({
+    summary: 'List paryment card.',
+    description: 'List paryment card.',
+  })
+  @ApiBearerAuth()
   @Get()
-  public async find(@Param('profileId') profileId: string) {}
+  public async find(
+    @Param('profileId') profileId: string,
+    @Query() query: FindPaymentCardDto,
+  ) {
+    const paymentCard = await this.paymentCardService.find(profileId, query);
 
-  @Get()
-  public async findOne(@Param('profileId') profileId: string) {}
+    return paymentCard;
+  }
 }

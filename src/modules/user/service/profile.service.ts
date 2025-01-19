@@ -1,8 +1,8 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
-  NotFoundException,
 } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, FlattenMaps, Model, Require_id } from 'mongoose';
@@ -47,7 +47,7 @@ export class ProfileService {
     const profile = await this.profileModel.findById(profileId).exec();
 
     if (!profile) {
-      throw new NotFoundException(['Invalid profile']);
+      throw new BadRequestException(['Invalid profile']);
     }
 
     return profile.toJSON();

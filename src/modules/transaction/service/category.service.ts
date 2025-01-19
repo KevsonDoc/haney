@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -39,5 +40,19 @@ export class CategoryService {
       .exec();
 
     return category;
+  }
+
+  public async validateCategory(categoryIds: string[]): Promise<void> {
+    const category = await this.categoryModel.find({ _id: categoryIds }).exec();
+
+    if (category.length === 0) {
+      throw new BadRequestException([
+        'you must provide at least one category.',
+      ]);
+    }
+
+    if (category.length !== categoryIds.length) {
+      throw new BadRequestException(['Invalid category.']);
+    }
   }
 }

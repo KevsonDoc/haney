@@ -20,7 +20,7 @@ export class Invoice {
   @Prop({ default: false })
   public recurrence: boolean;
 
-  @Prop()
+  @Prop({ default: null })
   public recurrenceCount: number | null;
 
   @Prop({ default: null })

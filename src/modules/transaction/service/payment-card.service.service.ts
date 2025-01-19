@@ -1,10 +1,11 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FlattenMaps, Model, Require_id } from 'mongoose';
 import { ProfileService } from 'src/modules/user/service/profile.service';
 import { CreatePaymentCardDto } from '../dto/create-payment-card.dto';
 import { FindPaymentCardDto } from '../dto/find-payment.dto';
@@ -44,9 +45,24 @@ export class PaymentCardService {
     const paymentCard = await this.paymentCard
       .find({ profile: profileId })
       .limit(limit)
-      .skip(skip)
-      .exec();
+      .skip(skip);
 
     return paymentCard;
+  }
+
+  public async findOneUnsafe(
+    paymentCardId: string,
+  ): Promise<FlattenMaps<Require_id<PaymentCard>>> {
+    const payment = await this.paymentCard
+      .findById(paymentCardId)
+      .where('deletedAt')
+      .equals(null)
+      .exec();
+
+    if (!payment) {
+      throw new BadRequestException('Invalid payment card');
+    }
+
+    return payment.toJSON();
   }
 }

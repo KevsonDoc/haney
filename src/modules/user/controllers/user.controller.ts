@@ -2,9 +2,9 @@ import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
-import { JwtAuthGuard } from '../authentication/guard/jwt-auth.guard';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserService } from './user.service';
+import { JwtAuthGuard } from '../../authentication/guard/jwt-auth.guard';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UserService } from '../service/user.service';
 
 @Controller('user')
 export class UserController {

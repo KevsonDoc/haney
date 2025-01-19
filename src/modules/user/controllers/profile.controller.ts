@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { Request } from 'express';
-import { JwtAuthGuard } from '../authentication/guard/jwt-auth.guard';
-import { CreateProfile } from './dto/create-profile.dto';
-import { ProfileService } from './profile.service';
+import { JwtAuthGuard } from '../../authentication/guard/jwt-auth.guard';
+import { CreateProfile } from '../dto/create-profile.dto';
+import { ProfileService } from '../service/profile.service';
 
 @Controller('profile')
 export class ProfileController {

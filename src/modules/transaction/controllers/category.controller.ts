@@ -24,6 +24,10 @@ export class CategoryController {
     return ['Category created successfully'];
   }
 
+  @ApiOperation({
+    summary: 'Find category.',
+    description: 'Find category.',
+  })
   @Get()
   public async find(@Query() payload: FindCategoryDto) {
     return await this.categoryService.find(payload);

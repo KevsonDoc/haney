@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, FlattenMaps, Model, Require_id } from 'mongoose';
-import { CreateProfile } from './dto/create-profile.dto';
-import { Profile } from './entities/profile.entity';
-import { User } from './entities/user.entity';
+import { CreateProfile } from '../dto/create-profile.dto';
+import { Profile } from '../entities/profile.entity';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class ProfileService {

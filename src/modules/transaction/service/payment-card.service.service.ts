@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProfileService } from 'src/modules/user/profile.service';
+import { ProfileService } from 'src/modules/user/service/profile.service';
 import { CreatePaymentCardDto } from '../dto/create-payment-card.dto';
 import { FindPaymentCardDto } from '../dto/find-payment.dto';
 import { PaymentCard } from '../entities/payment-card.entity';

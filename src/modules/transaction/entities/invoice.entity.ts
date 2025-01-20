@@ -41,16 +41,15 @@ export class Invoice {
   public category: [Category];
 
   @Prop({
-    type: {
-      default: null,
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'PaymentCard',
-    },
+    default: null,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PaymentCard',
   })
   public paymentCard: PaymentCard | null;
 
   @Prop({
-    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Profile',
   })
   public profile: Profile;
 }

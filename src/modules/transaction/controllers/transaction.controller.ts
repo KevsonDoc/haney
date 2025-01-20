@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CreateTransactionDto } from '../dto/create-transaction.dto';
+import { FindTransactions } from '../dto/find-transactions.dto';
 import { TransactionService } from '../service/transaction.service';
 
 @Controller('transaction/:profileId')
@@ -16,7 +17,12 @@ export class TransactionController {
   }
 
   @Get()
-  findAll() {
-    return this.transactionService.findAll();
+  public async findAll(
+    @Param('profileId') profileId: string,
+    @Query() payload: FindTransactions,
+  ) {
+    const transactions = await this.transactionService.find(profileId, payload);
+
+    return transactions;
   }
 }

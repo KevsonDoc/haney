@@ -22,6 +22,7 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  console.log(process.env.DATABASE_URL);
 
   await app.listen(process.env.APPLICATION_PORT ?? 3333);
 }

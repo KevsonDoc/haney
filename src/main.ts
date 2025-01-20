@@ -4,9 +4,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  console.log(process.env.DATABASE_URL);
-  console.log(process.env);
-
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
@@ -26,6 +23,6 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, documentFactory);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  await app.listen(process.env.APPLICATION_PORT ?? 3333);
+  await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
 bootstrap();
